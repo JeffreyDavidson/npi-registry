@@ -12,9 +12,7 @@ class ProviderForm extends Component
 
     public $npiNumber = '';
 
-    public $taxonomy = '';
-
-    public $description = '';
+    public $taxonomyDescription = '';
 
     public $city = '';
 
