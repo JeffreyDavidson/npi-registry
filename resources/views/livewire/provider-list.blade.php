@@ -174,7 +174,7 @@
                     </li>
                 @endforeach
             </ul>
-            <nav class="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination">
+            <nav class="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination" wire:scroll>
                 @if ($this->currentPage !== 1)
                     <a href="#" wire:click="setCurrentPage({{ $this->currentPage - 1 }})"
                         class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
