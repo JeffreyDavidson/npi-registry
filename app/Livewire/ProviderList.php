@@ -62,7 +62,7 @@ class ProviderList extends Component
         $validated = $this->providerForm->validate();
 
         if (! array_filter($validated)) {
-            return new LengthAwarePaginator([], count([]), 5);
+            return new LengthAwarePaginator([], count([]), 50);
         } else {
             if ($validated != $this->validated) {
                 $this->validated = $validated;
@@ -70,13 +70,13 @@ class ProviderList extends Component
                 Cache::set('providerlist', $storedProviders);
                 $providers = collect($storedProviders);
 
-                $this->totalPages = ($providers->count() / 5);
+                $this->totalPages = ($providers->count() / 50);
 
-                return $providers->skip(($this->currentPage - 1) * 5)->take(5);
+                return $providers->skip(($this->currentPage - 1) * 50)->take(50);
             } else {
                 $providers = collect(Cache::get('providerlist'));
 
-                return $providers->skip(($this->currentPage - 1) * 5)->take(5);
+                return $providers->skip(($this->currentPage - 1) * 50)->take(50);
             }
         }
     }
