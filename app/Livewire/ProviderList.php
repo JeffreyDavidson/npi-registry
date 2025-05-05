@@ -3,12 +3,28 @@
 namespace App\Livewire;
 
 use App\Models\ProviderInstance;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProviderList extends Component
 {
+    use WithPagination;
+
+    public int $totalPages = 0;
+
+    public $validated;
+
+    public int $currentPage = 1;
+
+    public function setCurrentPage(int $currentPage)
+    {
+        $this->currentPage = $currentPage;
+    }
+
     /**
      * The Livewire Form that contains the public properties and validation for the search
      */
@@ -41,11 +57,28 @@ class ProviderList extends Component
     }
 
     #[Computed]
-    public function providers(): array
+    public function providers()
     {
         $validated = $this->providerForm->validate();
 
-        return array_filter($validated) ? $this->getProviders($validated) : [];
+        if (! array_filter($validated)) {
+            return new LengthAwarePaginator([], count([]), 5);
+        } else {
+            if ($validated != $this->validated) {
+                $this->validated = $validated;
+                $storedProviders = $this->getProviders($validated);
+                Cache::set('providerlist', $storedProviders);
+                $providers = collect($storedProviders);
+
+                $this->totalPages = ($providers->count() / 5);
+
+                return $providers->skip(($this->currentPage - 1) * 5)->take(5);
+            } else {
+                $providers = collect(Cache::get('providerlist'));
+
+                return $providers->skip(($this->currentPage - 1) * 5)->take(5);
+            }
+        }
     }
 
     public function render()
