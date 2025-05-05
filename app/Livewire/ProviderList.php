@@ -9,6 +9,11 @@ class ProviderList extends Component
 {
     public array $providers = [];
 
+    /**
+     * The Livewire Form that contains the public properties and validation for the search
+     */
+    public ProviderForm $providerForm;
+
     public function mount()
     {
         $this->providers = $this->getProviders();

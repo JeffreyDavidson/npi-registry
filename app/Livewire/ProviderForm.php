@@ -2,26 +2,50 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Livewire\Form;
 
-class ProviderForm extends Component
+class ProviderForm extends Form
 {
-    public $firstName = '';
+    /**
+     * The first name of the provider, maps to first_name in the query
+     */
+    #[Validate('max:255')]
+    public string $first_name = '';
 
-    public $lastName = '';
+    /**
+     * The last name of the provider, maps to last_name in the query
+     */
+    #[Validate('max:255')]
+    public string $last_name = '';
 
-    public $npiNumber = '';
+    /**
+     * The npi number of the provider, maps to npi_number in the query
+     */
+    #[Validate('integer|size:10')]
+    public string $npi_number = '';
 
-    public $taxonomyDescription = '';
+    /**
+     * The taxonomy description of the provider, maps to taxonomy_description in the query
+     */
+    #[Validate('max:255')]
+    public $taxonomy_description = '';
 
-    public $city = '';
+    /**
+     * The city of the provider, maps to city in the query
+     */
+    #[Validate('max:255')]
+    public string $city = '';
 
-    public $state = '';
+    /**
+     * The state of the provider, maps to state in the query
+     */
+    #[Validate('max:255')]
+    public string $state = '';
 
-    public $zipCode = '';
-
-    public function render()
-    {
-        return view('livewire.provider-form');
-    }
+    /**
+     * The postal_code of the provider, maps to postal_code in the query
+     */
+    #[Validate('max:255')]
+    public string $postal_code = '';
 }
