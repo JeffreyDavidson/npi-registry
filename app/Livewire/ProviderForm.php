@@ -20,10 +20,10 @@ class ProviderForm extends Form
     public string $last_name = '';
 
     /**
-     * The npi number of the provider, maps to npi_number in the query
+     * The number of the provider, maps to number in the query
      */
-    #[Validate('integer|size:10')]
-    public string $npi_number = '';
+    #[Validate('digits:10')]
+    public string $number = '';
 
     /**
      * The taxonomy description of the provider, maps to taxonomy_description in the query
